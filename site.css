@@ -247,9 +247,9 @@ main > section:last-child { padding-bottom: clamp(4rem, 10vw, 7rem); }
   width: 100%;
   max-width: 26rem;   /* the same box as the book covers */
   height: auto;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 5;
   object-fit: cover;
-  object-position: 40% 35%;
+  object-position: 0% 35%;
   border-radius: 999px;
   margin: 0 auto;
 }
