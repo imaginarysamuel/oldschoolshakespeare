@@ -1,0 +1,391 @@
+/* The author page's own style sheet. Nothing here depends on another site:
+   the pieces that began in Cueball's style sheet (the paper and ink colours,
+   Roboto, plain links) are copied in below. The fonts themselves come from
+   Google Fonts, linked in index.html. */
+
+/* === the palette, the fonts, the room on the page ==================== */
+
+:root {
+  --paper: #faf9f5;
+  --ink: #1a1a1a;
+  --muted: #666;
+  --quiet: #5c5c5c;
+  --recede: #868686;
+  --white: #fff;
+  --line: #ccc;
+  --line-dark: #bbb;
+  --mark: #fa8072;          /* the red */
+
+  /* The poster's blue, lightened as far as white lettering allows: 4.6 to 1
+     against white, over the 4.5 the web's accessibility standard (WCAG AA)
+     asks for ordinary-sized text. Under a pointer it deepens to the poster's
+     own blue, #0065a5 (6.2 to 1). */
+  --blue: #0079c6;
+  --blue-deep: #0065a5;
+  --blue-pale: #7fadd7;     /* the ring round a focused button or field */
+
+  --font-sans: 'Roboto', sans-serif;
+  --font-serif: 'IM Fell English', serif;
+  --font-display: 'Caprasimo', serif;
+
+  --page: 62rem;            /* the widest the page gets, side room included */
+  --side: 2rem;             /* room at each side on a phone */
+  --measure: 36rem;         /* the widest a line of body text runs */
+  --space-sm: 0.5rem;
+  --space-xl: 2rem;
+  --touch: 44px;
+  --ease: 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  :root { --side: 3.5rem; }   /* room at each side on a tablet or larger */
+}
+
+/* === the page ======================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0 auto;
+  padding: 0 var(--side);
+  max-width: var(--page);
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+p { margin: 0 0 1em; max-width: var(--measure); }
+
+figure { margin: 0; }
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--recede);
+  text-underline-offset: 2px;
+}
+
+a:hover { text-decoration-color: var(--ink); }
+
+/* Bold, for <strong>. Roboto's bold is loaded; Caprasimo and the Fell italic
+   have only one weight, so a <strong> inside a heading or a callout is
+   left as it is rather than faked. */
+strong,
+b { font-weight: 700; }
+
+h1 strong, h2 strong, h3 strong,
+.callout strong { font-weight: inherit; }
+
+/* Out of sight, still read aloud (the sign-up's label). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* === headings ======================================================== */
+
+/* Every heading is Caprasimo in the red. It has one weight, so no bold is
+   asked of it (a browser would fake one). */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--mark);
+  margin: 0;
+}
+
+/* The big headings in capitals by the style sheet, so the words themselves
+   stay in ordinary case. */
+h1,
+h2 {
+  text-transform: uppercase;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+  line-height: 1.3;
+  margin-bottom: 1.25rem;
+}
+
+/* Two voices in Fell italic: the blockquote, hung off a red rule at the
+   left, and the callout, the same voice centred with no rule. */
+blockquote,
+.callout {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  line-height: 1.2;
+}
+
+blockquote {
+  margin: 2.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--mark);
+}
+
+.callout {
+  text-align: center;
+  margin: 2.5rem auto;
+}
+
+/* === the section dividers ============================================ */
+
+/* Each <hr> in index.html is one divider. Move one with its section. */
+hr {
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* === the opening ===================================================== */
+
+.hero {
+  padding: clamp(3rem, 12vw, 8rem) 0 clamp(3rem, 8vw, 5rem);
+}
+
+/* The title is a brick, one word to a line, at every width. Each word is
+   sized to the width of the block (cqi, the heading's own width) so all four
+   end flush at the same edges: OLDSCHOOL 6.67em, SHAKESPEARE 8.22em,
+   UNDERGROUND 8.78em, CLASSICS 5.34em in Caprasimo, each divisor carrying a
+   hair of slack. The short words stand taller. On a phone the brick fills
+   the page; on a wide screen it stops at a size that stays a poster and
+   doesn't shout, and sits in the middle over the column below. */
+h1 {
+  container-type: inline-size;
+  line-height: 0.92;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+h1 .line { display: contents; }
+h1 .line:last-child { color: var(--recede); }
+h1 .line > span { display: block; }
+h1 .w1 { font-size: calc(100cqi / 6.75); }
+h1 .w2 { font-size: calc(100cqi / 8.3); }
+h1 .w3 { font-size: calc(100cqi / 8.86); }
+h1 .w4 { font-size: calc(100cqi / 5.42); }
+
+/* Under the title, one column, centred and set centred: the welcome,
+   Kim Holm's drawing, the words, and the knife and hammer last. */
+.hero-column {
+  max-width: var(--measure);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-column .callout:last-child { margin-bottom: 0; }
+
+/* Multiply lets the page's paper show through the white of his, so the
+   ink sits straight on the page. */
+.hero-art { margin: 0; }
+
+.hero-art img {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  margin: 0 auto;
+  mix-blend-mode: multiply;
+}
+
+/* === the sections ==================================================== */
+
+main > section { padding: clamp(3rem, 8vw, 5rem) 0; }
+main > section:last-child { padding-bottom: clamp(4rem, 10vw, 7rem); }
+
+.book,
+.about {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+@media (min-width: 720px) {
+  .book,
+  .about {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 4.5rem);
+  }
+}
+
+/* The covers are photographs of the books with their own shadows, on
+   nothing, so they sit straight on the paper. */
+.cover img {
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* A pill: straight sides, round at top and bottom. */
+.portrait img {
+  display: block;
+  width: 100%;
+  max-width: 26rem;   /* the same box as the book covers */
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 40% 35%;
+  border-radius: 999px;
+  margin: 0 auto;
+}
+
+.movement { text-align: center; }
+.movement p { margin-left: auto; margin-right: auto; }
+
+/* === buttons ========================================================= */
+
+/* Pills in the blue. They work as a link or as a <button>. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--touch);
+  margin-top: 0.75rem;
+  padding: 1.05rem 2.5rem;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: normal;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: var(--white);
+  background-color: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color var(--ease), transform var(--ease), box-shadow var(--ease);
+}
+
+.btn:hover,
+.btn:focus {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: var(--blue-deep);
+  border-color: var(--blue-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:focus { outline: none; }
+.btn:focus-visible { outline: 3px solid var(--blue-pale); outline-offset: 3px; }
+.btn:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+
+@media (min-width: 480px) {
+  .btn { width: auto; min-width: 18rem; }
+}
+
+/* === the email sign-up =============================================== */
+
+/* A pill field with the button under it, the same width. */
+.signup {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-sm);
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+}
+
+.signup input[type="email"] {
+  font: inherit;
+  font-size: 1.05rem;
+  min-height: var(--touch);
+  width: 100%;
+  padding: 1.05rem 1.6rem;
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.signup input[type="email"]::placeholder { color: var(--muted); }
+
+.signup input[type="email"]:focus-visible {
+  outline: 3px solid var(--blue-pale);
+  outline-offset: 2px;
+  border-color: var(--blue);
+}
+
+/* A field for robots: out of sight and out of reach of a person. */
+.signup .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+.signup .btn { margin-top: 0; min-width: 0; width: 100%; }
+
+/* After a send the button reads "Thank you": at full colour, and still. */
+.signup.is-done .btn:disabled,
+.signup.is-done .btn:disabled:hover {
+  opacity: 1;
+  cursor: default;
+  background-color: var(--blue);
+  border-color: var(--blue);
+  transform: none;
+  box-shadow: none;
+}
+
+.signup-note {
+  flex: 1 1 100%;
+  min-height: 1.5em;
+  margin: 0.25rem auto 0;
+  font-size: 0.75rem;
+  color: var(--quiet);
+}
+
+/* === rising in as they come into view ================================ */
+
+/* Pure CSS: each block's rise is tied to its own place on the screen, so it
+   comes up as it scrolls in. A browser that can't do this (or a reader who
+   has asked for less motion) simply sees everything in place. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(3rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise ease-out both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+    /* The words follow the picture a moment behind it. */
+    .book-text.reveal,
+    .about-text.reveal { animation-range: entry 20% cover 38%; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
